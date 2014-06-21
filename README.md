@@ -21,21 +21,21 @@ To set it up you need to create a JSON file with the following attributes:
 To use
 ======
 
-from fixed_files import Fixed_files
+    from fixed_files import Fixed_files
 
-ff = Fixed_files('record') # record.json
+    ff = Fixed_files('record') # record.json
 
-records = open('record.txt').readlines()
+    records = open('record.txt').readlines()
 
-rec_in = []
+    rec_in = []
 
-for record in records:
+    for record in records:
 
-     rec_in.append(ff.parse(record))
+          rec_in.append(ff.parse(record))
 
-for n, r in enumerate(rec_in):
+    for n, r in enumerate(rec_in):
 
-     print ff.unparse(r) + '\n' == records[n]
+         print ff.unparse(r) + '\n' == records[n]
 
 
 
