@@ -11,7 +11,7 @@ Arose a need to handle files with fixed data formats
 
 As this need involve several types of records I decided to do a generic parse and  unparse
 
-Para parametrizá-lo é necessário criar um arquivo JSON com os seguintes atributos:
+To set it up you need to create a JSON file with the following attributes:
 
 - field    - field name
 - type     - str or int
