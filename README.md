@@ -22,7 +22,8 @@ To use
 ======
 
 from fixed_files import Fixed_files
-ff = Fixed_files('record') #
+
+ff = Fixed_files('record') # record.json
 
 records = open('record.txt').readlines()
 
