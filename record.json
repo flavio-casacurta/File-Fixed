@@ -1,0 +1,4 @@
+{"field": "tr", "length": "2", "type": "int", "decimals":  "0"}
+{"field": "seq", "length": "12", "type": "int", "decimals":  "2"}
+{"field": "estado", "length": "2", "type": "str", "decimals": "0"}
+{"field": "resto", "length": "14", "type": "str", "decimals":  "0"}
