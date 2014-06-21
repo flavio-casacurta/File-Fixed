@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
-__author__ = 'flavio@casacurta.com'
+
 
 from __future__ import absolute_import, unicode_literals
 import json
 from collections import namedtuple
 
+__author__ = 'flavio@casacurta.com'
 
 class Fixed_files(object):
 
-    def __init__(self, fjson):
+    def __init__(self, fjson, dic=False):
+        self.dic = dic
         try:
             attrs = open('{}.json'.format(fjson)).readlines()
         except:
@@ -37,17 +39,22 @@ class Fixed_files(object):
         for att in self.lattrs:
             if att['type'] == 'str':
                 fmt_out_str += "{}".format('{:<' + att['length'] + '}')
-                fmt_out_fmt += 'record["{}"], '.format(att['field'])
+                if self.dic:
+                    fmt_out_fmt += 'record["{}"], '.format(att['field'])
+                else:
+                    fmt_out_fmt += 'record.{}, '.format(att['field'])
             elif att['type'] == 'int':
                 if int(att['decimals']):
                    dec = ' * {}'.format(int('{:<0{}}'.format('1', int(att['decimals'])+1)))
                 else:
                    dec = ''
                 fmt_out_str += '{}'.format('{:>0' + att['length'] + '}')
-                fmt_out_fmt += 'str(int(record["{}"]{}))'.format(att['field'], dec)
+                if self.dic:
+                    fmt_out_fmt += 'str(int(record["{}"]{}))'.format(att['field'], dec)
+                else:
+                    fmt_out_fmt += 'str(int(record.{}{}))'.format(att['field'], dec)
                 fmt_out_fmt += ', '
-        self.fmt_out = "'" + fmt_out_str + "'.format(" + fmt_out_fmt + ")"
-
+        self.fmt_out = "'" + fmt_out_str + "\\n'.format(" + fmt_out_fmt + ")"
 
     def parse(self, record):
         Record = namedtuple('Record', self.attr)
@@ -56,10 +63,13 @@ class Fixed_files(object):
             exec compile("{} = slice({}, {})".format(att['field'], start, (start + int(att['length']))), '', 'exec')
             start += int(att['length'])
         nt = eval("Record({})".format(self.slices))
-        return self.dictionarize(nt)
+        if self.dic:
+            return self.dictionary(nt)
+        else:
+            return nt
 
 
-    def dictionarize(self, nt):
+    def dictionary(self, nt):
         return {k:nt[n] for n, k in enumerate(self.attr)}
 
 
