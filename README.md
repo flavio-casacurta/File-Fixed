@@ -21,16 +21,20 @@ To set it up you need to create a JSON file with the following attributes:
 To use
 ======
 
-    from fixed_files import Fixed_files
-    ff = Fixed_files('record', dic=True )
-    # record.json
-    # return a dict if dic else namedtuple
-    records = open('record.txt').readlines()
-    rec_in = []
-    for record in records:
-          rec_in.append(ff.parse(record))
-    for n, r in enumerate(rec_in):
-         print ff.unparse(r) == records[n]
+    >>> from fixed_files import Fixed_files
+    >>> ff = Fixed_files('record', dic=False, checklength=False)
+    >>> records = open('record.txt').readlines()
+    >>> rec_in = []
+    >>> for record in records:
+    ...      rec_in.append(ff.parse(record))
+    
+    >>> for n, r in enumerate(rec_in):
+    ...     print ff.unparse(r) == records[n]
+        
+    >>> rec_in[0]                                               
+    Out[6]: Record(tr=1, seq=1234567890.1200001, estado='SP', resto='AAAAAAAAAAAAAX')     
 
-
+    >>> rec_in[0] = rec_in[0]._replace(resto='Z12345678901234Z')
+    >>> ff.unparse(rec_in[0])
+    ... FieldLengthOverflow:
 
