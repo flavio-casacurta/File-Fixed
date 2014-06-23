@@ -72,12 +72,12 @@ class Fixed_files(object):
             start += int(att['length'])
         nt = eval("Record({})".format(self.slices))
         if self.dic:
-            return self.dictionary(nt)
+            return self.to_dict(nt)
         else:
             return nt
 
 
-    def dictionary(self, nt):
+    def to_dict(self, nt):
 
         return {k:nt[n] for n, k in enumerate(self.attr)}
 
