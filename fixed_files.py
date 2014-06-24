@@ -67,7 +67,6 @@ class Fixed_files(object):
         Record = namedtuple('Record', self.attr)
         start = 0
         for att in self.lattrs:
-            #exec compile("{} = slice({}, {})".format(att['field'], start, (start + int(att['length']))), '', 'exec')
             exec ("{} = slice({}, {})".format(att['field'], start, (start + int(att['length']))))
             start += int(att['length'])
         nt = eval("Record({})".format(self.slices))
