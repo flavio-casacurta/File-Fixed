@@ -29,12 +29,17 @@ class Fixed_files(object):
         for att in self.lattrs:
             self.attr.append(att['field'])
 
+        start = 0
+        for att in self.lattrs:
+            exec ("self.{} = slice({}, {})".format(att['field'], start, (start + int(att['length']))))
+            start += int(att['length'])
+
         self.slices = ''
         for att in self.lattrs:
             if att['type'] == 'str':
-                self.slices += 'record[{}], '.format(att['field'])
+                self.slices += 'record[self.{}], '.format(att['field'])
             elif att['type'] == 'int':
-                self.slices += 'int(record[{}])'.format(att['field'])
+                self.slices += 'int(record[self.{}])'.format(att['field'])
                 if int(att['decimals']):
                     self.slices += ' * .{:>0{}}'.format('1', att['decimals'])
                 self.slices += ', '
@@ -65,18 +70,14 @@ class Fixed_files(object):
     def parse(self, record):
 
         Record = namedtuple('Record', self.attr)
-        start = 0
-        for att in self.lattrs:
-            exec ("{} = slice({}, {})".format(att['field'], start, (start + int(att['length']))))
-            start += int(att['length'])
         nt = eval("Record({})".format(self.slices))
         if self.dic:
-            return self.to_dict(nt)
+            return self._to_dict(nt)
         else:
             return nt
 
 
-    def to_dict(self, nt):
+    def _to_dict(self, nt):
 
         return {k:nt[n] for n, k in enumerate(self.attr)}
 
