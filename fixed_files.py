@@ -21,13 +21,9 @@ class Fixed_files(object):
         except:
             attrs = []
 
-        self.lattrs = []
-        for line in attrs:
-            self.lattrs.append(json.loads(line.decode('utf-8')))
+        self.lattrs = [json.loads(line.decode('utf-8')) for line in attrs]
 
-        self.attr = []
-        for att in self.lattrs:
-            self.attr.append(att['field'])
+        self.attr = [att['field'] for att in self.lattrs]
 
         start = 0
         for att in self.lattrs:
