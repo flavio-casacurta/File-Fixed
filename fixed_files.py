@@ -61,12 +61,12 @@ class Fixed_files(object):
                     fmt_out_fmt += 'str(int(record.{}{}))[:{}]'.format(att['field'], dec, att['length'])
                 fmt_out_fmt += ', '
         self.fmt_out = "'" + fmt_out_str + "\\n'.format(" + fmt_out_fmt + ")"
+        self.Record = namedtuple('Record', self.attr)
 
 
     def parse(self, record):
 
-        Record = namedtuple('Record', self.attr)
-        nt = eval("Record({})".format(self.slices))
+        nt = eval("self.Record({})".format(self.slices))
         if self.dic:
             return self._to_dict(nt)
         else:

@@ -9,7 +9,7 @@ Overview
 
 Arose a need to handle files with fixed data formats
 
-As this need involve several types of records I decided to do a generic parse and  unparse
+As this need involve several types of records I decided to do a generic parse and unparse
 
 To set it up you need to create a JSON file with the following attributes:
 
