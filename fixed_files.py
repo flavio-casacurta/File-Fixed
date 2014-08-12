@@ -67,15 +67,21 @@ class Fixed_files(object):
     def parse(self, record):
 
         nt = eval("self.Record({})".format(self.slices))
+
         if self.dic:
-            return self._to_dict(nt)
+#           return dict(nt._asdict())
+            return {k:nt[n] for n, k in enumerate(self.attr)}
+            '''
+            >>> %timeit -n100000 dict(nt._asdict())
+            100000 loops, best of 3: 14.1 microseconds per loop
+            >>> %timeit -n100000 {k:nt[n] for n, k in enumerate(ff.attr)}
+            100000 loops, best of 3: 909 nanoseconds per loop
+            1 microsecond = 1.000 nanoseconds
+            14.1*1000/909
+            15.51 fast
+            '''
         else:
             return nt
-
-
-    def _to_dict(self, nt):
-
-        return {k:nt[n] for n, k in enumerate(self.attr)}
 
 
     def unparse(self, record):
