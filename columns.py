@@ -27,6 +27,10 @@ class Columns(object):
 
             line = lin[:-1]
             wrd, wrds = words(line)
+
+            if not wrds[0].isdigit():
+                continue
+
             level = int(wrds[0])
 
             if redefines:
@@ -55,6 +59,6 @@ class Columns(object):
                                                                                              length,
                                                                                              type,
                                                                                              decimals)
-            tCol = '{'+ tCol +'}'
+            tCol = '{'+ tCol +'}\n'
             addColumns.append(tCol)
         return addColumns

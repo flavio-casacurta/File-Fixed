@@ -17,7 +17,10 @@ class Fixed_files(object):
         self.checklength = checklength
 
         try:
-            attrs = open('{}.json'.format(filejson)).readlines()
+            if filejson.endswith('.json'):
+                attrs = open(filejson).readlines()
+            else:
+                attrs = open('{}.json'.format(filejson)).readlines()
         except:
             attrs = []
 
