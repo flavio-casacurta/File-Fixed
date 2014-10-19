@@ -19,18 +19,18 @@ class Montajson(object):
         self.col = Columns()
 
     def montajson(self):
-        path = ''.join(open(self.properties).readline().replace("'","").split())
+        path = ''.join(open(self.properties).readline().replace("'", "").split())
         config = open(os.path.join(path,'config.properties')).readlines()
-        dCnfg  ={line.split()[0]:line.split()[1] for line in config}
-        ehBook = lambda book: book[-3:].upper() == dCnfg['EXTCPY']
+        diccnfg = {line.split()[0]:line.split()[1] for line in config}
+        isbook = lambda book: book[-3:].upper() == diccnfg['EXTCPY']
 
-        dirFileList = DirFileList()
-        dirFileList.setDirFileList(dCnfg['DIRSOULIB'])
-        book_list = dirFileList.getDirFileList()
+        dirfilelist = DirFileList()
+        dirfilelist.setDirFileList(diccnfg['DIRSOULIB'])
+        booklist = dirfilelist.getDirFileList()
 
-        for book in filter(ehBook, book_list):
-            baseName = os.path.basename(book).split('.')[0]
+        for book in filter(isbook, booklist):
+            basename = os.path.basename(book).split('.')[0]
             print book
-            bookWrite = open('{}{}'.format(dCnfg['DIRCNVJSON'], baseName + '.json'),'w')
-            bookWrite.writelines(self.col.columns(book))
-            bookWrite.close()
+            bookwrite = open('{}{}'.format(diccnfg['DIRCNVJSON'], basename + '.json'), 'w')
+            bookwrite.writelines(self.col.columns(book))
+            bookwrite.close()
