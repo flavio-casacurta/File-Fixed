@@ -55,9 +55,9 @@ class Columns(object):
             occurs = picture[2:] if len(picture) > 2 and picture[2] == 'OCCURS' else None
             type, length, decimals = self.attr.attribute_json(pic, usage, occurs)
 
-            tCol = '"field": "{}", "length": "{}", "type": "{}", "decimals":  "{}"'.format(dataName,
-                                                                                             length,
+            tCol = '"field": "{}", "type": "{}", "length": "{}", "decimals":  "{}"'.format(dataName,
                                                                                              type,
+                                                                                             length,
                                                                                              decimals)
             tCol = '{'+ tCol +'}\n'
             addColumns.append(tCol)
