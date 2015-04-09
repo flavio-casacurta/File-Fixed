@@ -38,9 +38,11 @@ class Fixed_files(object):
             if att['type'] == 'str':
                 self.slices += 'record[self.{}], '.format(att['field'])
             elif att['type'] == 'int':
+                if int(att['decimals']):
+                    self.slices += 'round('
                 self.slices += 'int(record[self.{}])'.format(att['field'])
                 if int(att['decimals']):
-                    self.slices += ' * .{:>0{}}'.format('1', att['decimals'])
+                    self.slices += ' * .{0:>0{1}}, {1})'.format('1', att['decimals'])
                 self.slices += ', '
 
         fmt_out_str = ''
